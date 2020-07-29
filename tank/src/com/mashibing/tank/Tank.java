@@ -4,15 +4,17 @@ import java.awt.*;
 import java.util.Random;
 
 public class Tank {
-    private int x, y;
-    private Dir dir = Dir.DOWN;
+    public int x, y;
+    public Dir dir = Dir.DOWN;
     private static final int SPEED = 5;
     private boolean moving = true;
-    private TankFrame tf = null;
+    public TankFrame tf = null;
     private boolean living = true;
     private Random random = new Random();
-    private Group group = Group.BAD;
+    public Group group = Group.BAD;
     Rectangle rect = new Rectangle();
+
+    FireStrategy fs = new DefaultFireStrategy();
 
     public static int WIDTH = ResourceMgr.goodTankU.getWidth();
 
@@ -29,6 +31,18 @@ public class Tank {
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+
+        if (group == Group.GOOD){
+            String goodFSName=(String)PropertyMgr.get("goodFS");
+            try {
+                fs=(FireStrategy)Class.forName(goodFSName).newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            fs = new DefaultFireStrategy();
+        }
+
     }
 
     public void paint(Graphics g) {
@@ -90,8 +104,8 @@ public class Tank {
     private void boundCheck() {
         if (this.x < 2) x = 2;
         if (this.y < 28) y = 28;
-        if (this.x > TankFrame.GAME_WIDTH- Tank.WIDTH -2) x = TankFrame.GAME_WIDTH - Tank.WIDTH -2;
-        if (this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT -2 ) y = TankFrame.GAME_HEIGHT -Tank.HEIGHT -2;
+        if (this.x > TankFrame.GAME_WIDTH - Tank.WIDTH - 2) x = TankFrame.GAME_WIDTH - Tank.WIDTH - 2;
+        if (this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2) y = TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2;
     }
 
     public Dir getDir() {
@@ -135,9 +149,7 @@ public class Tank {
     }
 
     public void fire() {
-        int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
-        int bY = this.y + Tank.HEIGHT / 2 - Bullet.WIDTH / 2;
-        tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
+        fs.fire(this);
     }
 
     public void die() {
