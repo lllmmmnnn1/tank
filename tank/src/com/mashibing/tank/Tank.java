@@ -13,6 +13,7 @@ public class Tank {
     private Random random = new Random();
     public Group group = Group.BAD;
     Rectangle rect = new Rectangle();
+    GameModel gm;
 
     FireStrategy fs = new DefaultFireStrategy();
 
@@ -20,12 +21,12 @@ public class Tank {
 
     public static int HEIGHT = ResourceMgr.goodTankU.getHeight();
 
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.tf = tf;
+        this.gm = gm;
 
         rect.x = this.x;
         rect.y = this.y;
@@ -46,7 +47,7 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
-        if (!living) tf.tanks.remove(this);
+        if (!living) gm.tanks.remove(this);
 
         switch (dir) {
             case LEFT:
