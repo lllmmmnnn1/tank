@@ -3,7 +3,7 @@ package com.mashibing.tank;
 import java.awt.*;
 import java.util.Random;
 
-public class Tank {
+public class Tank extends GameObject{
     public int x, y;
     public Dir dir = Dir.DOWN;
     private static final int SPEED = 5;
@@ -47,7 +47,7 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
-        if (!living) gm.tanks.remove(this);
+        if (!living) gm.remove(this);
 
         switch (dir) {
             case LEFT:
