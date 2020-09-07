@@ -1,5 +1,10 @@
 package com.mashibing.tank;
 
+import com.mashibing.tank.cor.BulletTankCollider;
+import com.mashibing.tank.cor.Collider;
+import com.mashibing.tank.cor.ColliderChain;
+import com.mashibing.tank.cor.TankTankCollider;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +16,8 @@ public class GameModel {
     /*List<Bullet> bullets=new ArrayList<>();
     List<Tank> tanks=new ArrayList<>();
     List<Explode> explodes =new ArrayList<>();*/
+
+    ColliderChain chain = new ColliderChain();
 
     private List<GameObject> objects =new ArrayList<>();
 
@@ -42,6 +49,16 @@ public class GameModel {
         myTank.paint(g);
         for (int i=0;i<objects.size();i++) {
             objects.get(i).paint(g);
+        }
+
+        //互相碰撞
+        for (int i = 0; i < objects.size(); i++) {
+            for (int j = i+1; j < objects.size(); j++) {
+                GameObject o1 =objects.get(i);
+                GameObject o2 =objects.get(j);
+
+                chain.collide(o1,o2);
+            }
         }
 
         /*for (int i = 0; i < bullets.size(); i++) {

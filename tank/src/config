@@ -7,3 +7,7 @@ gameHeight=720
 #fireStrategy
 goodFS=com.mashibing.tank.FourDirFireStrategy
 badFS=com.mashibing.tank.DefaultFireStrategy
+@colliders
+colliders=com.mashibing.tank.cor.BulletTankCollider,com.mashibing.tank.cor.TankTankCollider
+
+

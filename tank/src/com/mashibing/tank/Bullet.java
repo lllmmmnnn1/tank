@@ -5,7 +5,7 @@ import jdk.nashorn.internal.ir.IfNode;
 
 import java.awt.*;
 
-public class Bullet extends GameObject{
+public class Bullet extends GameObject {
     private static final int SPEED = 10;
     public static final int WIDTH = ResourceMgr.bulletD.getWidth();
     public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
@@ -90,8 +90,8 @@ public class Bullet extends GameObject{
 
     }
 
-    public void collideWith(Tank tank) {
-        if (this.group == tank.getGroup()) return;
+    public boolean collideWith(Tank tank) {
+        if (this.group == tank.getGroup()) return false;
 
         Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
         Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
@@ -101,7 +101,9 @@ public class Bullet extends GameObject{
             int eX = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
             int eY = tank.getY() + Tank.HEIGHT / 2 - Explode.WIDTH / 2;
             gm.add(new Explode(eX, eY, gm));
+            return true;
         }
+        return false;
     }
 
     private void die() {

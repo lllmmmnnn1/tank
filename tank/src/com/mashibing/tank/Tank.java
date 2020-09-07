@@ -3,7 +3,7 @@ package com.mashibing.tank;
 import java.awt.*;
 import java.util.Random;
 
-public class Tank extends GameObject{
+public class Tank extends GameObject {
     public int x, y;
     public Dir dir = Dir.DOWN;
     private static final int SPEED = 5;
@@ -33,10 +33,10 @@ public class Tank extends GameObject{
         rect.width = WIDTH;
         rect.height = HEIGHT;
 
-        if (group == Group.GOOD){
-            String goodFSName=(String)PropertyMgr.get("goodFS");
+        if (group == Group.GOOD) {
+            String goodFSName = (String) PropertyMgr.get("goodFS");
             try {
-                fs=(FireStrategy)Class.forName(goodFSName).newInstance();
+                fs = (FireStrategy) Class.forName(goodFSName).newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -156,4 +156,17 @@ public class Tank extends GameObject{
     public void die() {
         this.living = false;
     }
+
+    public Rectangle getRect() {
+        return rect;
+    }
+
+    public void setRect(Rectangle rect) {
+        this.rect = rect;
+    }
+
+    public void stop() {
+        moving = false;
+    }
+
 }
